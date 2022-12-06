@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createStudent } from './student.service';
+import { createStudent, getOneStudent } from './student.service';
 
 const router = Router();
 
@@ -9,6 +9,16 @@ router.post('/', async (req, res) => {
 
     res.json({
         message: 'Thats student was create',
+        data: result,
+    });
+});
+
+router.get('/:id', async (req, res) => {
+    const { id: studentId } = req.params;
+    const result = await getOneStudent(req.db, studentId);
+
+    res.json({
+        message: 'Thats your student',
         data: result,
     });
 });

@@ -18,5 +18,17 @@ export async function createStudent(
     returning *
     `, [student.name, student.email]);
 
-    return result;
+    return result as { id: number };
+}
+
+export async function getOneStudent(
+    connection: PoolClient,
+    studentId: string,
+) {
+    const { rows } = await connection.query(`
+    select * from students
+    where id = $1
+    `, [studentId]);
+
+    return rows;
 }
