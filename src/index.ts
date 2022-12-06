@@ -1,5 +1,5 @@
 import { generateServer } from './app/generate-server';
-import { studentController } from './app/users/student.controller';
+import { studentController } from './app/students/student.controller';
 import { connectToPg } from './common/connect-to-pg';
 
 async function main() {
