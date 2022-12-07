@@ -1,5 +1,6 @@
 import { PoolClient } from 'pg';
 import { CreateStudentDto } from '../../dto/create-student.dto';
+import { UpdateStudentDto } from '../../dto/update-student.dto';
 
 export async function createStudent(
     connection: PoolClient,
@@ -54,4 +55,30 @@ export async function removeStudent(
   `, [studentId]);
 
     return rows;
+}
+
+export async function updateStudent(
+    connection: PoolClient,
+    studentId: string,
+    changeData: UpdateStudentDto,
+    // Partial<Omit<StudentEntity, 'id'>>,
+) {
+    const entries = Object.entries(changeData);
+    entries.push(['id', studentId]);
+
+    const { rows: [result] } = await connection.query(`
+    update students
+    set
+    
+    ${entries.slice(0, -1).map(([k], i) => {
+        const dollar = `$${i + 1}`;
+
+        return `${k} = ${dollar}`;
+    }).join(', ')}
+
+    where id = $${entries.length}
+    returning *
+  `, entries.map(([, v]) => v));
+
+    return result;
 }

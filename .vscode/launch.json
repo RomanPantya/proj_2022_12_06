@@ -2,18 +2,10 @@
   "version": "0.2.0",
   "configurations": [
    {
-     "name": "start:dev",
-     "request": "launch",
-     "runtimeArgs": [
-       "run-script",
-       "start:dev"
-     ],
-     "runtimeExecutable": "npm",
-     "skipFiles": [
-       "<node_internals>/**"
-     ],
-     "type": "pwa-node",
-     "console": "integratedTerminal"
+    "command": "npm run build && npm start",
+    "name": "npm run build && npm  start",
+    "request": "launch",
+    "type": "node-terminal"
    }
   ]
 }
