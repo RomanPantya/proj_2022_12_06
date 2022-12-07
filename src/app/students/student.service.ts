@@ -67,18 +67,37 @@ export async function updateStudent(
     entries.push(['id', studentId]);
 
     const { rows: [result] } = await connection.query(`
-    update students
-    set
-    
-    ${entries.slice(0, -1).map(([k], i) => {
+      update students
+      set
+
+      ${entries.slice(0, -1).map(([k], i) => {
         const dollar = `$${i + 1}`;
 
         return `${k} = ${dollar}`;
     }).join(', ')}
 
-    where id = $${entries.length}
-    returning *
-  `, entries.map(([, v]) => v));
+      where id = $${entries.length}
+      returning *
+    `, entries.map(([, v]) => v));
 
     return result;
+
+    // const { rows: [result1] } = await connection.query(`
+    // select * from students
+    // where id = $1
+    // `, [studentId]);
+
+    // const { name: name1, email: email1 } = result1;
+    // const { name = name1, email = email1 } = changeData;
+
+    // const { rows: [result] } = await connection.query(`
+    // update students
+    // set
+    // name = $1,
+    // email = $2
+    // where id = $3
+    // returning *
+    // `, [name, email, studentId]);
+
+    // return result;
 }
