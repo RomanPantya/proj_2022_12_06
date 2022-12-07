@@ -32,3 +32,13 @@ export async function getOneStudent(
 
     return rows;
 }
+
+export async function getAllStudents(
+    connection: PoolClient,
+) {
+    const { rows } = await connection.query(`
+  select * from students
+  `);
+
+    return rows;
+}
