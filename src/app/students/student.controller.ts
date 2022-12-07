@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { createStudent, getOneStudent, getAllStudents } from './student.service';
+import {
+    createStudent, getOneStudent, getAllStudents, removeStudent,
+} from './student.service';
 
 const router = Router();
 
@@ -28,6 +30,16 @@ router.get('/', async (req, res) => {
 
     res.json({
         message: 'Thats all students',
+        data: result,
+    });
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id: studentId } = req.params;
+    const result = await removeStudent(req.db, studentId);
+
+    res.json({
+        message: 'Thats student was remove',
         data: result,
     });
 });

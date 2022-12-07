@@ -42,3 +42,16 @@ export async function getAllStudents(
 
     return rows;
 }
+
+export async function removeStudent(
+    connection: PoolClient,
+    studentId: string,
+) {
+    const { rows } = await connection.query(`
+    delete from students
+    where id = $1
+    returning *
+  `, [studentId]);
+
+    return rows;
+}
